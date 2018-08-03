@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Profile</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B"
+        crossorigin="anonymous">
+    <script src="src/profile.js"></script>
+    <script type="text/javascript" src="src/mustache.js"></script>
+    <script>
+
+        /* let d = JSON.parse(localStorage.getItem('data'));
+        let node = document.getElementById("details");
+        let o = d.account;
+        console.log(); */
+
+
+
+        function loadtemp() {
+            let xhttp = new XMLHttpRequest();
+            let o;
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    let data = this.responseText;
+                    o = JSON.parse(data);
+                    if (o.code == 200) {
+                        let view = {
+                            "people": o.account,
+                            "getfirstname": function () {
+                                return this.firstname
+                            },
+                            "getlastname": function () {
+                                return this.lastname
+                            },
+                            "getemail": function () {
+                                return this.email
+                            },
+                            "getpassword": function () {
+                                return this.password
+                            },
+                            "getcity": function () {
+                                return this.city
+                            },
+                            "getstate": function () {
+                                return this.state
+                            },
+                            "getcountry": function () {
+                                return this.country
+                            },
+                            "getzipcode": function () {
+                                return this.zipcode
+                            },
+                            "getphone": function () {
+                                return this.phone
+                            },
+                            "getalternateemail": function () {
+                                return this.alteremail
+                            },
+                            "getid": function () {
+                                return this.user_id
+                            }
+                        }
+
+                        let node = document.getElementById("details");
+                        let output = Mustache.render(
+                            `
+         {{#people}}
+         <br>
+         => <b>First name</b>       : {{getfirstname}}<br>
+         => <b>Last name</b>        : {{getlastname}}<br>
+         => <b>Email Address</b>    : {{getemail}}<br>
+         => <b>Password</b>         : {{getpassword}}<br>
+         => <b>city</b>             : {{getcity}}<br>
+         => <b>State</b>            : {{getstate}}<br>
+         => <b>Country</b>          : {{getcountry}}<br>
+         => <b>Zipcode</b>          : {{getzipcode}}<br>
+         => <b>Phone number</b>     : {{getphone}}<br>
+         => <b>Alternate email</b>  : {{getalternateemail}}<br><br>
+         
+         <button class="btn btn-success mt-2 mb-5" onClick="edit({{getid}})">clone</button>
+         <button class="btn btn-danger mt-2 ml-2 mb-5" onClick="destroy({{getid}})">Delete</button>
+         <button class="btn btn-primary mt-2 ml-2 mb-5" onClick="add()">Add new person</button>
+         {{/people}}
+         `
+
+                            , view);
+                        node.innerHTML = output;
+                    }
+                    else if (o.code == 404) {
+                        alert(o.internalMessage);
+                    }
+                    else if (o.code == 500) {
+                        alert(o.userMessage);
+                        console.log(o.internalMessage);
+                    }
+                }
+            };
+
+            xhttp.open("GET", "http://localhost:8080/api/v1/users", true);
+            xhttp.send();
+        }
+
+    </script>
+
+</head>
+
+<body onload="loadtemp()">
+    <div class="container border border-dark">
+        <div id="details" class="mt-3 text-justify">
+        </div>
+    </div>
+</body>
+
+</html>
