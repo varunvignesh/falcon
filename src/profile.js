@@ -93,17 +93,24 @@ function destroy(id1) {
     }
     let xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-            let data = JSON.parse(this.responseText)
-            if (data.code == 404) {
+        if (this.readyState == 4 && this.status == 204) {
+            location.reload();
+            /* if (data.code == 404) {
                 alert(data.internalMessage);
             }
             else if (data.code == 204) {
                 location.reload();
             } else {
                 alert(data.userMessage);
-            }
+            } */
+        }
+        else if (this.readyState == 4 && this.status == 404) {
+            alert(data.internalMessage);
+        }
+        else if (this.readyState == 4 && this.status == 500) {
+            alert(data.error[0].userMessage);
         };
+
     }
     xhttp.open("DELETE", "http://localhost:8080/api/v1/users", true);
     xhttp.setRequestHeader("Content-type", "application/json");
@@ -121,10 +128,11 @@ function edit(id1) {
     }
     let xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
+        if (this.readyState == 4 && this.status == 201) {
 
-            let data = JSON.parse(this.responseText)
-            if (data.code == 404) {
+            let data = JSON.parse(this.responseText);
+            window.location.href = "http://localhost/gmaps/ind.html";
+            /* if (data.code == 404) {
                 alert(data.internalMessage);
             }
             else if (data.code == 201) {
@@ -132,7 +140,15 @@ function edit(id1) {
             } else {
                 alert(data.userMessage);
                 console.log(data.internalMessage);
-            }
+            } */
+        }
+        else if (this.readyState == 4 && this.status == 404){
+            let data = this.responseText;
+            alert(data.internalMessage);
+        }
+        else if (this.readyState == 4 && this.status == 500){
+            let data = this.responseText;
+            alert(data.errors[0].userMessage);
         };
     }
     xhttp.open("PUT", "http://localhost:8080/api/v1/clone", true);

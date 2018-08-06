@@ -18,6 +18,7 @@ module.exports = {
                         internalMessage: "The resource was successfully deleted",
                         code: 204
                     }
+                    res.status(204)
                     res.send(JSON.stringify(str));
                 } else {
                     res.setHeader('Content-Type', 'application/json');
@@ -26,6 +27,7 @@ module.exports = {
                         internalMessage: "No such account",
                         code: 404
                     }
+                    res.status(404)
                     res.send(JSON.stringify(str));
                 }
 
@@ -42,6 +44,7 @@ module.exports = {
                     ]
 
                 }
+                res.status(500)
                 res.send(JSON.stringify(error));
             });
 

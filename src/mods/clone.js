@@ -10,8 +10,9 @@ module.exports = {
 
         new userstable({ 'user_id': data }).fetch()
             .then(function (userexist) {
-
+                debugger;
                 if (userexist != null) {
+
                     let clonetable = bookshelf.Model.extend({
                         tableName: 'clone'
                     })
@@ -27,6 +28,7 @@ module.exports = {
                             internalMessage: "New clone resource has been created",
                             code: 201
                         }
+                        res.status(201)
                         res.send(JSON.stringify(o));
                     }).catch(function (ex) {
 
@@ -41,6 +43,7 @@ module.exports = {
                                 }
                             ]
                         }
+                        res.status(500)
                         res.send(JSON.stringify(error));
 
                     })
@@ -52,6 +55,7 @@ module.exports = {
                         internalMessage: "No such account",
                         code: 404
                     }
+                    res.status(404)
                     res.send(JSON.stringify(str));
                 }
 
@@ -67,6 +71,7 @@ module.exports = {
                         }
                     ]
                 }
+                res.status(500)
                 res.send(JSON.stringify(error));
             });
         /* const mysql = require('mysql')

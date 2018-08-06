@@ -15,8 +15,8 @@ module.exports = {
             internalMessage: "Eyerything is working",
             code: 200,
           };
-          let key = 'account';
-          o[key] = users;
+          // let key = 'account';
+          o['account'] = users;
           res.send(JSON.stringify(o));
         }
         else {
@@ -26,6 +26,7 @@ module.exports = {
             internalMessage: "No users found",
             code: 404
           }
+          res.status(404)
           res.send(JSON.stringify(str));
         }
       }).catch(function (ex) {
@@ -41,6 +42,7 @@ module.exports = {
             }
           ]
         }
+        res.status(500)
         res.send(JSON.stringify(error));
 
       })

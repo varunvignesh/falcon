@@ -89,13 +89,21 @@
                             , view);
                         node.innerHTML = output;
                     }
-                    else if (o.code == 404) {
+                    /* else if (o.code == 404) {
                         alert(o.internalMessage);
                     }
                     else if (o.code == 500) {
                         alert(o.userMessage);
                         console.log(o.internalMessage);
-                    }
+                    } */
+                }
+                else if(this.readyState == 4 && this.status == 404){
+                    let data = this.responseText;
+                    alert(o.internalMessage);
+                }
+                else if(this.readyState == 4 && this.status == 500){
+                    let data = this.responseText;
+                    alert(o.userMessage);
                 }
             };
 

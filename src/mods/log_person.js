@@ -6,7 +6,7 @@ module.exports = {
       tableName: 'user'
     })
 
-    let userdetails = req.body.account[0];
+    let userdetails = req.body.account;
 
 
     new users({ 'email': userdetails.email }).fetch()
@@ -31,6 +31,7 @@ module.exports = {
               internalMessage: "New resource has been created",
               code: 201
             }
+            res.status(201)
             res.send(JSON.stringify(o));
           }).catch(function (error) {
             console.log(error);
@@ -45,6 +46,7 @@ module.exports = {
                 }
               ]
             }
+            res.status(500)
             res.send(JSON.stringify(error));
           });
         } else {
@@ -54,7 +56,8 @@ module.exports = {
             internalMessage: "Email already exists",
             code: 304
           }
-          res.send(JSON.stringify(o));
+          res.status(304);
+          
         }
       }).catch(function (ex) {
         res.setHeader('Content-Type', 'application/json');
@@ -68,6 +71,7 @@ module.exports = {
             }
           ]
         }
+        res.status(500)
         res.send(JSON.stringify(error));
       })
 

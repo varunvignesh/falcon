@@ -12,6 +12,7 @@ module.exports = {
 			]
 
 		}
+		res.status(404)
 		res.send(JSON.stringify(error));
 	}
 }

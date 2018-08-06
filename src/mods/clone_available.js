@@ -46,6 +46,7 @@ module.exports = {
                                             }
                                         ]
                                     }
+                                    res.status(500)
                                     res.send(JSON.stringify(error));
                                 })
 
@@ -62,6 +63,7 @@ module.exports = {
                                     }
                                 ]
                             }
+                            res.status(500)
                             res.send(JSON.stringify(error));
                         })
                 }
@@ -72,6 +74,7 @@ module.exports = {
                         internalMessage: "No such account",
                         code: 404
                     }
+                    res.status(404)
                     res.send(JSON.stringify(str));
                 }
             }).catch(function (ex) {
@@ -86,6 +89,7 @@ module.exports = {
                         }
                     ]
                 }
+                res.status(500)
                 res.send(JSON.stringify(error));
 
             })

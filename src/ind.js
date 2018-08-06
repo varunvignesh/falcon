@@ -105,9 +105,9 @@ function submitAction() {
     let phnum1 = document.getElementById("phnum").value;
     let alternateemail1 = document.getElementById("alternateemail").value;
 
-    o = {};
-    let key = 'account';
-    o[key] = [];
+
+    //let key = 'account';
+    //o[key] = [];
 
     let data = {
         "firstname": fname,
@@ -121,14 +121,16 @@ function submitAction() {
         "phnum": phnum1,
         "alternateemail": alternateemail1
     }
-    o[key].push(data);
+
+    let o = { account: data };
+    //o[key].push(data);
 
     let xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
+        if (this.readyState == 4 && this.status == 201) {
 
             let data = JSON.parse(this.responseText);
-            if (data.code == 201) {
+            /* if (data.code == 201) {
                 window.location.href = "/gmaps/profile.html";
             }
             else if (data.code == 304) {
@@ -137,7 +139,15 @@ function submitAction() {
             else {
                 
                 alert(data.internalMessage);
-            }
+            } */
+            window.location.href = "/gmaps/profile.html";
+        }
+        else if ( this.status == 304) {
+            alert('email already exists');
+        }
+        else if ( this.status == 500) {
+            let data = JSON.parse(this.responseText);
+            alert(data.internalMessage);
         }
     };
     xhttp.open("POST", "http://localhost:8080/api/v1/users", true);
